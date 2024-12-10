@@ -12,16 +12,41 @@ public class App {
         Document document = Jsoup.connect(URL).get();
 
         // get the html with the data (scraping)
-        //Elements spans = document.select("span[class]");
         Elements reviewText = document.select("div.review-text-content");
-        Elements reviewUsername = document.select("div.a-profile-content");
-        //Elements reviewStars = document.select("i.a-star-5");//.a-star-4.a-star-3.a-star-2.a-star-1.a-star-0");
+        Elements reviewUsername = document.select("div.a-profile-content");//"span.a-profile-name");
+        Elements reviewStars = document.select("i.cr-lightbox-review-rating");
+        Elements reviewDate = document.select("h6.review-date");
+        Elements reviewVerified = document.select("span.ive-verified-purchase-label");
+        
+        // check if all the data was retrieved
+        if ((reviewText==null) || (reviewUsername==null) || (reviewStars==null) || (reviewDate==null) || (reviewVerified==null)) { 
+            System.out.println("Not all data is retrieved.");
+            if (reviewText==null) { 
+                System.out.println("text");
+            }
+            if (reviewUsername==null) { 
+                System.out.println("usernames");
+            }
+            if (reviewStars==null) { 
+                System.out.println("stars");
+            }
+            if (reviewDate==null) { 
+                System.out.println("date");
+            }
+            if (reviewVerified==null) { 
+                System.out.println("verified");
+            }
+        }
+        else { 
+            System.out.println("DONE.");
+        }
 
-        //Elements reviewText = spans.select(".review-text-content");
-        //Elements reviewUsername = document.getElementsByClass("a-profile-name");
-        //Elements reviewTitle = document.getElementsByClass("review-title");
-        //Elements reviewRating = document.getElementsByClass("review-star-rating");
-        System.out.println(reviewText);
-        System.out.println(reviewUsername);
+        // get the text of the reviews
+        String text = reviewText.text(); // WORKS
+        String usernames = reviewUsername.text(); // WORKS
+        String stars = reviewStars.text();
+        String date = reviewDate.text();
+        String verified = reviewVerified.text();
+        System.out.println(usernames);
     }
 }
